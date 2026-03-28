@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Doctor</title>
+</head>
+<body>
+
+<h2>🤖 AI Doctor</h2>
+
+<input type="text" id="msg" placeholder="Write symptoms...">
+<button onclick="sendMsg()">Send</button>
+
+<p id="chat"></p>
+
+<script>
+function sendMsg(){
+    let msg = document.getElementById("msg").value;
+
+    fetch("/chat", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({message: msg})
+    })
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("chat").innerHTML += "<br>You: " + msg;
+        document.getElementById("chat").innerHTML += "<br>AI: " + data.reply;
+    });
+}
+</script>
+
+</body>
+</html>
